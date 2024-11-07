@@ -1,6 +1,6 @@
-package com.javaacademy.atomic.atomic;
+package com.javaacademy.atomic;
 
-import com.javaacademy.atomic.atomic.reactor_departament.ReactorDepartament;
+import com.javaacademy.atomic.reactor_departament.ReactorDepartament;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;

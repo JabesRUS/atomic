@@ -1,7 +1,7 @@
-package com.javaacademy.atomic.atomic.reactor_departament;
+package com.javaacademy.atomic.reactor_departament;
 
-import com.javaacademy.atomic.atomic.exception.NuclearFuelsEmptyException;
-import com.javaacademy.atomic.atomic.exception.ReactorWorkException;
+import com.javaacademy.atomic.exception.NuclearFuelsEmptyException;
+import com.javaacademy.atomic.exception.ReactorWorkException;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;

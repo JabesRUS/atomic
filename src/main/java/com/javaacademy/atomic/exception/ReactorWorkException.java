@@ -1,4 +1,4 @@
-package com.javaacademy.atomic.atomic.exception;
+package com.javaacademy.atomic.exception;
 
 public class ReactorWorkException extends Exception {
     public ReactorWorkException(String message) {
