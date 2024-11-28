@@ -1,5 +1,6 @@
-package com.javaacademy.atomic;
+package com.javaacademy.atomic.security_departament;
 
+import com.javaacademy.atomic.nuclear_station.NuclearStation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

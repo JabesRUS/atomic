@@ -1,5 +1,6 @@
 package com.javaacademy.atomic;
 
+import com.javaacademy.atomic.nuclear_station.NuclearStation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

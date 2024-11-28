@@ -1,6 +1,6 @@
 package com.javaacademy.atomic.reactor_departament;
 
-import com.javaacademy.atomic.SecurityDepartment;
+import com.javaacademy.atomic.security_departament.SecurityDepartment;
 import com.javaacademy.atomic.exception.NuclearFuelsEmptyException;
 import com.javaacademy.atomic.exception.ReactorWorkException;
 import lombok.NonNull;
