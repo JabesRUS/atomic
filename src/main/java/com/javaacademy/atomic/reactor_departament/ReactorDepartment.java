@@ -36,7 +36,6 @@ public class ReactorDepartment {
             checkReactorStarts(counterReactorStart);
         } catch (NuclearFuelsEmptyException e) {
             log.info(e.getMessage());
-            securityDepartment.addAccident();
             return BigDecimal.ZERO;
         }
         return AMOUNT_OF_ENERGY_GENERATED;
@@ -56,10 +55,12 @@ public class ReactorDepartment {
      */
     private void checkStateReactor(@NonNull String state) throws ReactorWorkException {
         if (state.equals(NOT_IN_WORKING_CONDITION) && isWorking) {
+            securityDepartment.addAccident();
             throw new ReactorWorkException(MESSAGE_WORKING_CONDITION);
         }
 
         if (state.equals(WORKING_CONDITION) && !isWorking) {
+            securityDepartment.addAccident();
             throw new ReactorWorkException(MESSAGE_NOT_IN_WORKING_CONDITION);
         }
     }
@@ -69,6 +70,7 @@ public class ReactorDepartment {
      */
     private void checkReactorStarts(int countStartsReactor) throws NuclearFuelsEmptyException {
         if (countStartsReactor % DAY_NUMBER_FOR_TECHNICAL_WORKS == 0) {
+            securityDepartment.addAccident();
             throw new NuclearFuelsEmptyException(MESSAGE_NO_FUEL);
         }
     }
