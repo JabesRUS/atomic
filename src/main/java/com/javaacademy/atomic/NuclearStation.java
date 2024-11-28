@@ -2,12 +2,10 @@ package com.javaacademy.atomic;
 
 import com.javaacademy.atomic.exception.ReactorWorkException;
 import com.javaacademy.atomic.reactor_departament.ReactorDepartament;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 
@@ -21,13 +19,22 @@ public class NuclearStation {
     private static final String NUCLEAR_POWER_PLANT_SHUTDOWN_MESSAGE = "Атомная станция закончила работу. " +
             "За год выработано {} киловатт/часов.";
     private static final String MESSAGE_OF_TECHNICAL_WORK = "Внимание! Происходят технические работы. Электричества нет!";
+    private static final String INCIDENT_REPORTING_FOR_YEAR = "Количество инцидентов за год {}\n";
+    private static final String INCIDENT_REPORTING_FOR_ENTIRE_PERIOD = "Количество инцидентов за всю работу станции {}";
     private static final int NUMBER_OF_DAYS_IN_YEAR = 365;
-    private ReactorDepartament reactorDepartament;
     private BigDecimal amountEnergyGenerated = BigDecimal.ZERO;
+    private int accidentCountAllTime;
+    @Lazy
+    @Autowired
+    private ReactorDepartament reactorDepartament;
+    @Lazy
+    @Autowired
+    private SecurityDepartment securityDepartment;
 
-    public NuclearStation(ReactorDepartament reactorDepartament) {
-        this.reactorDepartament = reactorDepartament;
-    }
+//    public NuclearStation(@Lazy ReactorDepartament reactorDepartament, @Lazy SecurityDepartment securityDepartment) {
+//        this.reactorDepartament = reactorDepartament;
+//        this.securityDepartment = securityDepartment;
+//    }
 
     /**
      * Метод запуска реактора на 1 год
@@ -55,6 +62,8 @@ public class NuclearStation {
 
         amountEnergyGenerated = amountEnergyGenerated.add(amountEnergyGeneratedYear);
         log.info(NUCLEAR_POWER_PLANT_SHUTDOWN_MESSAGE, NumberFormat.getInstance().format(amountEnergyGeneratedYear));
+        log.info(INCIDENT_REPORTING_FOR_YEAR, securityDepartment.getCountAccident());
+        securityDepartment.reset();
     }
 
     /**
@@ -64,5 +73,13 @@ public class NuclearStation {
         for (int i = 0; i < year; i++) {
             startYear();
         }
+        log.info(INCIDENT_REPORTING_FOR_ENTIRE_PERIOD, accidentCountAllTime);
+    }
+
+    /**
+     * Метод изменения количества инцидентов
+     */
+    public void incrementAccident(int count) {
+        accidentCountAllTime += count;
     }
 }
