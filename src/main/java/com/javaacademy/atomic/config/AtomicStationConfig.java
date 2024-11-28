@@ -1,7 +1,5 @@
 package com.javaacademy.atomic.config;
 
-import com.javaacademy.atomic.reactor_departament.ReactorDepartament;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration

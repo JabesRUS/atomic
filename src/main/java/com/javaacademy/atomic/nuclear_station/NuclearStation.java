@@ -3,8 +3,9 @@ package com.javaacademy.atomic.nuclear_station;
 import com.javaacademy.atomic.economic_department.EconomicDepartment;
 import com.javaacademy.atomic.economic_department.EconomicOfCountryProperty;
 import com.javaacademy.atomic.exception.ReactorWorkException;
-import com.javaacademy.atomic.reactor_departament.ReactorDepartament;
+import com.javaacademy.atomic.reactor_departament.ReactorDepartment;
 import com.javaacademy.atomic.security_departament.SecurityDepartment;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -28,10 +29,11 @@ public class NuclearStation {
     private static final String INCIDENT_REPORTING_FOR_ENTIRE_PERIOD = "Количество инцидентов за всю работу станции {}";
     private static final int NUMBER_OF_DAYS_IN_YEAR = 365;
     private BigDecimal amountEnergyGenerated = BigDecimal.ZERO;
+    @Getter
     private int accidentCountAllTime;
     @Lazy
     @Autowired
-    private ReactorDepartament reactorDepartament;
+    private ReactorDepartment reactorDepartment;
     @Lazy
     @Autowired
     private SecurityDepartment securityDepartment;
@@ -54,7 +56,7 @@ public class NuclearStation {
             BigDecimal amountEnergyFromDay = null;
 
             try {
-                amountEnergyFromDay = reactorDepartament.run();
+                amountEnergyFromDay = reactorDepartment.run();
             } catch (ReactorWorkException e) {
                 log.info(e.getMessage());
                 System.exit(1);
@@ -64,7 +66,7 @@ public class NuclearStation {
                 log.info(MESSAGE_OF_TECHNICAL_WORK);
             }
             amountEnergyGeneratedYear = amountEnergyGeneratedYear.add(amountEnergyFromDay);
-            reactorDepartament.stop();
+            reactorDepartment.stop();
         }
 
         amountEnergyGenerated = amountEnergyGenerated.add(amountEnergyGeneratedYear);
@@ -84,7 +86,6 @@ public class NuclearStation {
         log.info("Действие происходит в стране - {}", countryProperty.getCountry());
         for (int i = 0; i < year; i++) {
             startYear();
-
         }
         log.info(INCIDENT_REPORTING_FOR_ENTIRE_PERIOD, accidentCountAllTime);
     }

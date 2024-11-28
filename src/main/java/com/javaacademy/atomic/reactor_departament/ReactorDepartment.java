@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @Component
 @Slf4j
-public class ReactorDepartament {
+public class ReactorDepartment {
     private static final BigDecimal AMOUNT_OF_ENERGY_GENERATED = BigDecimal.valueOf(10_000_000);
     private static final int DAY_NUMBER_FOR_TECHNICAL_WORKS = 100;
     private static final String WORKING_CONDITION = "Run";
@@ -26,10 +26,6 @@ public class ReactorDepartament {
     private static int counterReactorStart;
     @Autowired
     private SecurityDepartment securityDepartment;
-
-//    public ReactorDepartament(SecurityDepartment securityDepartment) {
-//        this.securityDepartment = securityDepartment;
-//    }
 
     public BigDecimal run() throws ReactorWorkException {
         checkStateReactor(NOT_IN_WORKING_CONDITION);
