@@ -21,19 +21,13 @@ public class ReactorDepartament {
     static final int DAY_NUMBER_FOR_TECHNICAL_WORKS = 100;
     static final String WORKING_CONDITION = "Run";
     static final String NOT_IN_WORKING_CONDITION = "Not run";
-    Boolean isWorking = false;
+    Boolean isWorking = true;
     static int counterReactorStart;
 
-    public BigDecimal run() {
-        try {
-            checkStateReactor(NOT_IN_WORKING_CONDITION);
-            isWorking = true;
-            counterReactorStart++;
-        } catch (ReactorWorkException e) {
-            log.info(e.getMessage());
-        }
-//        isWorking = true;
-//        counterReactorStart++;
+    public BigDecimal run() throws ReactorWorkException {
+        checkStateReactor(NOT_IN_WORKING_CONDITION);
+        isWorking = true;
+        counterReactorStart++;
 
         try {
             checkReactorStarts(counterReactorStart);

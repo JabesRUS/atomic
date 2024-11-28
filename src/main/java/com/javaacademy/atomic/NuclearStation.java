@@ -1,5 +1,6 @@
 package com.javaacademy.atomic;
 
+import com.javaacademy.atomic.exception.ReactorWorkException;
 import com.javaacademy.atomic.reactor_departament.ReactorDepartament;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -15,19 +16,17 @@ import java.text.NumberFormat;
  */
 @Component
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class NuclearStation {
-    static final String NUCLEAR_POWER_PLANT_LAUNCH_MESSAGE = "Атомная станция начала работу";
-    static final String NUCLEAR_POWER_PLANT_SHUTDOWN_MESSAGE = "Атомная станция закончила работу. " +
+    private static final String NUCLEAR_POWER_PLANT_LAUNCH_MESSAGE = "Атомная станция начала работу";
+    private static final String NUCLEAR_POWER_PLANT_SHUTDOWN_MESSAGE = "Атомная станция закончила работу. " +
             "За год выработано {} киловатт/часов.";
-    static final String MESSAGE_OF_TECHNICAL_WORK = "Внимание! Происходят технические работы. Электричества нет!";
-    static final int NUMBER_OF_DAYS_IN_YEAR = 365;
-    ReactorDepartament reactorDepartament;
-    BigDecimal amountEnergyGenerated;
+    private static final String MESSAGE_OF_TECHNICAL_WORK = "Внимание! Происходят технические работы. Электричества нет!";
+    private static final int NUMBER_OF_DAYS_IN_YEAR = 365;
+    private ReactorDepartament reactorDepartament;
+    private BigDecimal amountEnergyGenerated = BigDecimal.ZERO;
 
-    public NuclearStation(@Qualifier("reactor_1") ReactorDepartament reactorDepartament) {
+    public NuclearStation(ReactorDepartament reactorDepartament) {
         this.reactorDepartament = reactorDepartament;
-        this.amountEnergyGenerated = BigDecimal.ZERO;
     }
 
     /**
@@ -38,7 +37,15 @@ public class NuclearStation {
         log.info(NUCLEAR_POWER_PLANT_LAUNCH_MESSAGE);
 
         for (int i = 1; i <= NUMBER_OF_DAYS_IN_YEAR; i++) {
-            BigDecimal amountEnergyFromDay = reactorDepartament.run();
+            BigDecimal amountEnergyFromDay = null;
+
+            try {
+                amountEnergyFromDay = reactorDepartament.run();
+            } catch (ReactorWorkException e) {
+                log.info(e.getMessage());
+                System.exit(1);
+            }
+
             if (amountEnergyFromDay.equals(BigDecimal.ZERO)) {
                 log.info(MESSAGE_OF_TECHNICAL_WORK);
             }
